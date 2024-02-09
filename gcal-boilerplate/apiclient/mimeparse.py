@@ -43,10 +43,9 @@ def parse_mime_type(mime_type):
     params = dict([tuple([s.strip() for s in param.split('=', 1)])\
             for param in parts[1:]
                   ])
-    full_type = parts[0].strip()
     # Java URLConnection class sends an Accept header that includes a
     # single '*'. Turn it into a legal wildcard.
-    if full_type == '*':
+    if (full_type := parts[0].strip()) == '*':
         full_type = '*/*'
     (type, subtype) = full_type.split('/')
 

@@ -96,8 +96,7 @@ TOSTRING = {
 def expand(template, vars):
   def _sub(match):
     groupdict = match.groupdict()
-    operator = groupdict.get('operator')
-    if operator is None:
+    if (operator := groupdict.get('operator')) is None:
       operator = ''
     varlist = groupdict.get('varlist')
 
@@ -113,8 +112,7 @@ def expand(template, vars):
       varname = groupdict.get('varname')
       explode = groupdict.get('explode')
       partial = groupdict.get('partial')
-      default = groupdict.get('default')
-      if default:
+      if default := groupdict.get('default'):
         defaults[varname] = default
       varnames.append((varname, explode, partial))
 

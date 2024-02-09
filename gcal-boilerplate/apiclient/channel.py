@@ -219,8 +219,7 @@ class Channel(object):
       resp: dict, The response from a watch() method.
     """
     for json_name, param_name in CHANNEL_PARAMS.iteritems():
-      value = resp.get(json_name)
-      if value is not None:
+      if (value := resp.get(json_name)) is not None:
         setattr(self, param_name, value)
 
 

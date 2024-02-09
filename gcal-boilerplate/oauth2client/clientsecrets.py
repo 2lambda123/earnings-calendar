@@ -144,8 +144,7 @@ def loadfile(filename, cache=None):
   if not cache:
     return _loadfile(filename)
 
-  obj = cache.get(filename, namespace=_SECRET_NAMESPACE)
-  if obj is None:
+  if (obj := cache.get(filename, namespace=_SECRET_NAMESPACE)) is None:
     client_type, client_info = _loadfile(filename)
     obj = {client_type: client_info}
     cache.set(filename, obj, namespace=_SECRET_NAMESPACE)

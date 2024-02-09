@@ -343,15 +343,13 @@ def verify_signed_jwt_with_certs(jwt, certs, audience):
     raise AppIdentityError('Invalid token signature: %s' % jwt)
 
   # Check creation timestamp.
-  iat = parsed.get('iat')
-  if iat is None:
+  if (iat := parsed.get('iat')) is None:
     raise AppIdentityError('No iat field in token: %s' % json_body)
   earliest = iat - CLOCK_SKEW_SECS
 
   # Check expiration timestamp.
   now = long(time.time())
-  exp = parsed.get('exp')
-  if exp is None:
+  if (exp := parsed.get('exp')) is None:
     raise AppIdentityError('No exp field in token: %s' % json_body)
   if exp >= now + MAX_TOKEN_LIFETIME_SECS:
     raise AppIdentityError(
