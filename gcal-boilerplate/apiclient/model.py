@@ -362,8 +362,7 @@ def makepatch(original, modified):
   """
   patch = {}
   for key, original_value in original.iteritems():
-    modified_value = modified.get(key, None)
-    if modified_value is None:
+    if (modified_value := modified.get(key, None)) is None:
       # Use None to signal that the element is deleted
       patch[key] = None
     elif original_value != modified_value:

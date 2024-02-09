@@ -245,8 +245,7 @@ class _SchemaToStruct(object):
     Returns:
       Prototype object based on the schema, in Python code with comments.
     """
-    stype = schema.get('type')
-    if stype == 'object':
+    if (stype := schema.get('type')) == 'object':
       self.emitEnd('{', schema.get('description', ''))
       self.indent()
       if 'properties' in schema:

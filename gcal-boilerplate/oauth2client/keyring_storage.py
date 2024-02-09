@@ -80,9 +80,8 @@ class Storage(BaseStorage):
       oauth2client.client.Credentials
     """
     credentials = None
-    content = keyring.get_password(self._service_name, self._user_name)
 
-    if content is not None:
+    if (content := keyring.get_password(self._service_name, self._user_name)) is not None:
       try:
         credentials = Credentials.new_from_json(content)
         credentials.set_store(self)
