@@ -11,6 +11,19 @@ TEMPLATE = re.compile(r"{(?P<operator>[\+\./;\?|!@])?(?P<varlist>[^}]+)}", re.UN
 VAR = re.compile(r"^(?P<varname>[^=\+\*:\^]+)((?P<explode>[\+\*])|(?P<partial>[:\^]-?[0-9]+))?(=(?P<default>.*))?$", re.UNICODE)
 
 def _tostring(varname, value, explode, operator, safe=""):
+  """Function _tostring takes in four parameters: varname, value, explode, and operator.
+  The varname parameter is a string representing the name of the variable.
+  The value parameter can be of type list or dictionary and represents the value of the variable.
+  The explode parameter is a string that determines how the value will be processed.
+  The operator parameter is a string that determines how the value will be joined.
+  The optional parameter safe can be used to specify characters that should not be quoted.
+  Returns a string that has been processed according to the given parameters.
+  Processing Logic:
+  - Handles different types of input values.
+  - Joins values using specified operator.
+  - Quotes values using urllib.quote().
+  - Handles optional safe parameter."""
+  
   if type(value) == type([]):
     if explode == "+":
       return ",".join([varname + "." + urllib.quote(x, safe) for x in value])
@@ -28,6 +41,8 @@ def _tostring(varname, value, explode, operator, safe=""):
 
 
 def _tostring_path(varname, value, explode, operator, safe=""):
+  """"""
+  
   joiner = operator
   if type(value) == type([]):
     if explode == "+":
@@ -52,6 +67,8 @@ def _tostring_path(varname, value, explode, operator, safe=""):
       return ""
 
 def _tostring_query(varname, value, explode, operator, safe=""):
+  """"""
+  
   joiner = operator
   varprefix = ""
   if operator == "?":
@@ -94,6 +111,8 @@ TOSTRING = {
 
 
 def expand(template, vars):
+  """"""
+  
   def _sub(match):
     groupdict = match.groupdict()
     if (operator := groupdict.get('operator')) is None:

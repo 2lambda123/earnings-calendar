@@ -36,6 +36,8 @@ dump_request_response = False
 
 
 def _abstract():
+  """"""
+  
   raise NotImplementedError('You need to override this function')
 
 
@@ -251,12 +253,16 @@ class JsonModel(BaseModel):
     self._data_wrapper = data_wrapper
 
   def serialize(self, body_value):
+      """"""
+      
     if (isinstance(body_value, dict) and 'data' not in body_value and
         self._data_wrapper):
       body_value = {'data': body_value}
     return simplejson.dumps(body_value)
 
   def deserialize(self, content):
+      """"""
+      
     content = content.decode('utf-8')
     body = simplejson.loads(content)
     if self._data_wrapper and isinstance(body, dict) and 'data' in body:
@@ -265,6 +271,8 @@ class JsonModel(BaseModel):
 
   @property
   def no_content_response(self):
+      """"""
+      
     return {}
 
 
@@ -280,10 +288,23 @@ class RawModel(JsonModel):
   alt_param = None
 
   def deserialize(self, content):
+      """"""
+      
     return content
 
   @property
   def no_content_response(self):
+      """"Returns an empty string to indicate a no content response.
+      Parameters:
+          - self (object): The object itself.
+      Returns:
+          - str: An empty string.
+      Processing Logic:
+          - Returns an empty string.
+          - Indicates no content response.
+          - Only returns an empty string.
+          - No other processing logic involved.""""
+      
     return ''
 
 
@@ -299,10 +320,31 @@ class MediaModel(JsonModel):
   alt_param = 'media'
 
   def deserialize(self, content):
+      """"Deserializes the given content and returns it.
+      Parameters:
+          - content (str): The content to be deserialized.
+      Returns:
+          - str: The deserialized content.
+      Processing Logic:
+          - Converts the given content into a string.
+          - No additional processing is done.
+          - Returns the deserialized content as is.""""
+      
     return content
 
   @property
   def no_content_response(self):
+      """"This function returns an empty string as a response when there is no content.
+      Parameters:
+          - self (object): The object that the function is called on.
+      Returns:
+          - str: An empty string.
+      Processing Logic:
+          - Returns an empty string.
+          - Called when there is no content.
+          - Does not take any parameters.
+          - Does not modify any data.""""
+      
     return ''
 
 
@@ -329,13 +371,34 @@ class ProtocolBufferModel(BaseModel):
     self._protocol_buffer = protocol_buffer
 
   def serialize(self, body_value):
+      """"""
+      
     return body_value.SerializeToString()
 
   def deserialize(self, content):
+      """Deserialize a protocol buffer from a string.
+      Parameters:
+          - content (str): String representation of the protocol buffer.
+      Returns:
+          - protocol_buffer (obj): Deserialized protocol buffer object.
+      Processing Logic:
+          - Deserialize protocol buffer from string."""
+      
     return self._protocol_buffer.FromString(content)
 
   @property
   def no_content_response(self):
+      """This function returns a protocol buffer object.
+      Parameters:
+          - self (object): An instance of a class.
+      Returns:
+          - protocol_buffer (object): A protocol buffer object.
+      Processing Logic:
+          - Returns a protocol buffer object.
+          - Created from the class instance.
+          - No additional content is added.
+          - Can be used for handling empty responses."""
+      
     return self._protocol_buffer()
 
 
