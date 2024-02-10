@@ -68,6 +68,8 @@ class InvalidClientSecretsError(Error):
 
 
 def _validate_clientsecrets(obj):
+  """"""
+  
   if obj is None or len(obj) != 1:
     raise InvalidClientSecretsError('Invalid file format.')
   client_type = obj.keys()[0]
@@ -87,16 +89,31 @@ def _validate_clientsecrets(obj):
 
 
 def load(fp):
+  """"""
+  
   obj = simplejson.load(fp)
   return _validate_clientsecrets(obj)
 
 
 def loads(s):
+  """"""
+  
   obj = simplejson.loads(s)
   return _validate_clientsecrets(obj)
 
 
 def _loadfile(filename):
+  """Loads a file and validates its contents as a client secrets object.
+  Parameters:
+      - filename (str): The name of the file to be loaded.
+  Returns:
+      - obj (dict): A dictionary containing the client secrets.
+  Processing Logic:
+      - Open file with read-only permission.
+      - Load file contents using simplejson.
+      - Close file.
+      - Validate the loaded object as client secrets."""
+  
   try:
     fp = file(filename, 'r')
     try:

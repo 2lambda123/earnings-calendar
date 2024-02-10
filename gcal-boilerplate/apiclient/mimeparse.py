@@ -166,6 +166,19 @@ def best_match(supported, header):
 
 
 def _filter_blank(i):
+    """Filters out blank strings from a given iterable.
+    Parameters:
+        - i (iterable): An iterable object containing strings.
+    Returns:
+        - generator: A generator object containing non-blank strings.
+    Processing Logic:
+        - Loop through each string in the iterable.
+        - Check if the string is blank.
+        - If the string is not blank, yield it.
+        - If the string is blank, do nothing.
+    Example:
+        _filter_blank(["hello", "", "world"]) # returns a generator object with "hello" and "world" as values."""
+    
     for s in i:
         if s.strip():
             yield s

@@ -87,6 +87,17 @@ X_GOOG_RESOURCE_ID    = 'X-GOOG-RESOURCE-ID'
 
 
 def _upper_header_keys(headers):
+  """"Converts all keys in a dictionary to uppercase."
+  Parameters:
+      - headers (dict): Dictionary containing key-value pairs.
+  Returns:
+      - dict: Dictionary with all keys converted to uppercase.
+  Processing Logic:
+      - Create an empty dictionary.
+      - Iterate through the key-value pairs in the input dictionary.
+      - Convert the key to uppercase and add it to the new dictionary with the same value.
+      - Return the new dictionary."""
+  
   new_headers = {}
   for k, v in headers.iteritems():
     new_headers[k.upper()] = v
